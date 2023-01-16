@@ -178,6 +178,9 @@ return [
         // No CAPTCHA reCAPTCHA
         Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
 
+        // Agent
+        Jenssegers\Agent\AgentServiceProvider::class,
+
     ],
 
     /*
@@ -235,6 +238,12 @@ return [
 
         // No CAPTCHA reCAPTCHA
         'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
+
+        // Agent
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
+
+        // Main Helpers
+        'mainHelpers' => App\Http\Controllers\Helpers\mainController::class,
     ],
 
 ];

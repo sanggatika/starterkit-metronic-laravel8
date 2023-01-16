@@ -130,7 +130,7 @@
                     
                     {{-- Include Auth Content --}}
                     @yield('content')
-                    
+
                     <!--end::Content-->
                 </div>
                 <!--end::Wrapper-->
@@ -151,9 +151,11 @@
     <script src="{{ asset('plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('js/scripts.bundle.js') }}"></script>
     <!--end::Global Javascript Bundle-->
+    
     <!--begin::Custom Javascript(used for this page only)-->
-    <script src="{{ asset('js/custom/authentication/sign-in/general.js') }}"></script>
+    {{-- <script src="{{ asset('js/custom/authentication/sign-in/general.js') }}"></script> --}}
     <!--end::Custom Javascript-->
+
     <!--end::Javascript-->
 
     {{-- page script --}}

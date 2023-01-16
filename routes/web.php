@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 // Controller
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\DashboardController;
 
 // Middleware 
 
@@ -23,7 +24,17 @@ use App\Http\Controllers\AuthenticationController;
 //     return view('welcome');
 // });
 
+// landing
 Route::get('/', [LandingController::class, 'page_homeLanding'])->name('landing');
 
-Route::get('/auth', [AuthenticationController::class, 'page_loginAuthentication'])->name('auth');
-Route::get('/auth/login', [AuthenticationController::class, 'page_loginAuthentication'])->name('auth.login');
+// auth
+Route::group(['middleware' => ['prevent-back-history','guest']], function () {
+    Route::get('/auth', [AuthenticationController::class, 'page_loginAuthentication'])->name('auth');
+    Route::get('/auth/login', [AuthenticationController::class, 'page_loginAuthentication'])->name('auth.login');
+    Route::post('/auth/login/act', [AuthenticationController::class, 'act_loginAuthentication'])->name('auth.login.act');
+});
+
+// dashboard
+Route::group(['middleware' => ['verified']], function () {
+    Route::get('/dash', [DashboardController::class, 'page_admDashboard'])->name('dash');
+});
