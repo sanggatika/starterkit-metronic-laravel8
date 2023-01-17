@@ -174,6 +174,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        // costum
+        App\Providers\MenuServiceProvider::class,
 
         // No CAPTCHA reCAPTCHA
         Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,

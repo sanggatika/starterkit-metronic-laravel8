@@ -15,6 +15,6 @@ class DashboardController extends Controller
     public function page_admDashboard(Request $request){
         // dd(Auth::user());
         $model['route'] = 'Home';
-        return view('pages.publik.beranda.v_beranda', ['model' => $model]);
+        return view('layouts.adminLayoutMaster', ['model' => $model]);
     }
 }

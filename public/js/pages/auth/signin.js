@@ -43,14 +43,16 @@ var KTSigninGeneral = function() {
                         t.disabled = !0,
 
                         // action auth login
-                        actsubmitAuthSignin(),
+                        actsubmitAuthSignin(),                        
 
-                        // reset input password
-                        $('#form_password').val(''),
+                        setTimeout(function() {
+                            // reset input password
+                            $('#form_password').val(''),
 
-                        // allow submit botton
-                        t.removeAttribute("data-kt-indicator"), 
-                        t.disabled = !1
+                            // allow submit botton
+                            t.removeAttribute("data-kt-indicator"), 
+                            t.disabled = !1
+                        }, 2000)
 
                         ) : Swal.fire({
                         text: "Sorry, looks like there are some errors detected, please try again.",
@@ -133,7 +135,7 @@ function actsubmitAuthSignin()
                     showCancelButton: false,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Reload Page',
+                    confirmButtonText: 'Masuk Aplikasi',
                     confirmButtonClass: 'btn btn-primary',
                     cancelButtonClass: 'btn btn-danger ml-1',
                     buttonsStyling: false,

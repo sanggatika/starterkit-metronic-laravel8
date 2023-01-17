@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Exceptions\Handler;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
-use Session;
 use mainHelpers;
 use Carbon\Carbon;
 
@@ -47,6 +47,7 @@ class AuthenticationController extends Controller
 
         // wajib menggunakan request ajax
         if ($request->ajax()) {
+            sleep(2);
             // dd($request->all());
             $validator = Validator::make($request->all(), [
                 'username' => 'required',
@@ -179,6 +180,19 @@ class AuthenticationController extends Controller
             $message = "Apakah Anda Robot Ingin Masuk Kedalam Sistem..!!";
             return $this->onResult($status, $response_code, $message, $dataAPI);
         }
+    }
+
+    /**
+     * Logout user
+     * 
+     * @return \Illuminate\Routing\Redirector
+     */
+    public function logoutAuthentication()
+    {
+        Session::flush();
+        Auth::logout();
+
+        return redirect('/');
     }
 
     /**

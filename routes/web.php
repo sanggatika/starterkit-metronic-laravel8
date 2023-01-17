@@ -28,10 +28,15 @@ use App\Http\Controllers\DashboardController;
 Route::get('/', [LandingController::class, 'page_homeLanding'])->name('landing');
 
 // auth
-Route::group(['middleware' => ['prevent-back-history','guest']], function () {
+Route::group(['middleware' => ['guest']], function () {
     Route::get('/auth', [AuthenticationController::class, 'page_loginAuthentication'])->name('auth');
     Route::get('/auth/login', [AuthenticationController::class, 'page_loginAuthentication'])->name('auth.login');
     Route::post('/auth/login/act', [AuthenticationController::class, 'act_loginAuthentication'])->name('auth.login.act');
+});
+
+// auth
+Route::group(['middleware' => ['auth','prevent-back-history']], function () {
+    Route::get('/auth/logout', [AuthenticationController::class, 'logoutAuthentication'])->name('auth.logout');
 });
 
 // dashboard
