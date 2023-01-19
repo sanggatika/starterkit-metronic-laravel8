@@ -57,6 +57,11 @@ class AuthenticationController extends Controller
                 'recaptcha' => 'required|captcha'
             ]);
 
+            // check auth user
+            // dd(Hash::make($request->password));
+            // $user = User::where('username', $request->username)->first();
+            // dd(Hash::check($request->password, $user->password));
+
             // Ketika data kiriman tidak sesuai
             if ($validator->fails())
             {
@@ -397,7 +402,6 @@ class AuthenticationController extends Controller
         // wajib menggunakan request ajax
         if ($request->ajax()) {
             sleep(2);
-            // dd($request->all());
             $validator = Validator::make($request->all(), [
                 'token' => 'required',
                 'password' => 'required',
@@ -461,19 +465,23 @@ class AuthenticationController extends Controller
                 return $this->onResult($status, $response_code, $message, $dataAPI);
             }
 
+            // dd($checkExistingDataUser);
+
+            $params = [
+                'password' => Hash::make($request->password),
+                'updated_at' => Carbon::now('Asia/Jakarta')
+            ];
+
             // proses update
-            DB::beginTransaction();
             try {
+                // dd(Hash::make($request->password));
                 $checkToken->status = '1';
                 $checkToken->save();
 
-                $checkExistingDataUser->password = Hash::make($request->password);
-                $checkExistingDataUser->updated_at = Carbon::now('Asia/Jakarta');
+                // update user
+                User::where('id', $checkExistingDataUser->id)
+                ->update($params);
 
-                $checkExistingDataUser->save();
-
-                DB::commit();
-                
                 $status = true;
                 $response_code = "RC200";
                 $message = "Anda Berhasil Update Password, silahkan login !!";
@@ -481,7 +489,6 @@ class AuthenticationController extends Controller
         
                 return $this->onResult($status, $response_code, $message, $dataAPI);
             } catch (\Throwable $error) {
-                DB::rollback();
                 Log::critical($error);
         
                 $response_code = "RC400";
