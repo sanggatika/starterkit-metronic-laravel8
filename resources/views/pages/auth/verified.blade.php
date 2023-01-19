@@ -109,12 +109,6 @@
                 <a href="{{url('/dash')}}" class="btn btn-warning mt-5"><i class="bi bi-building-lock fs-4 me-2"></i> Link Konfirmasi</a>
             </div>
             @endif
-            
-            <!--begin::Separator-->
-            <div class="separator separator-dotted separator-content border-success my-10">
-                <i class="bi bi-check-square text-success fs-2"></i>
-            </div>
-            <!--end::Separator-->
 
             
 
