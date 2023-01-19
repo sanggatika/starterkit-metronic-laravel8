@@ -32,6 +32,12 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('/auth', [AuthenticationController::class, 'page_loginAuthentication'])->name('auth');
     Route::get('/auth/login', [AuthenticationController::class, 'page_loginAuthentication'])->name('auth.login');
     Route::post('/auth/login/act', [AuthenticationController::class, 'act_loginAuthentication'])->name('auth.login.act');
+
+    Route::get('/auth/forgot', [AuthenticationController::class, 'page_forgotAuthentication'])->name('auth.forgot');
+    Route::post('/auth/forgot/send_verif', [AuthenticationController::class, 'act_forgotAuthentication'])->name('auth.forgot.send_verif');
+
+    Route::get('/auth/reset/{token}', [AuthenticationController::class, 'page_resetAuthentication'])->name('auth.reset');
+    Route::post('/auth/reset/act', [AuthenticationController::class, 'act_resetAuthentication'])->name('auth.reset.act');
 });
 
 // auth

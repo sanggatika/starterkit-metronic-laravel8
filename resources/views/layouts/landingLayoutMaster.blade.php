@@ -53,7 +53,7 @@
 <body id="kt_body" data-bs-spy="scroll" data-bs-target="#kt_landing_menu" class="bg-white position-relative">
     
     <!--begin::Theme mode setup on page load-->
-    <script nonce="{{ csp_nonce() }}">
+    <script>
         var defaultThemeMode = "light";
         var themeMode;
         if (document.documentElement) {
@@ -163,20 +163,20 @@
     <!--end::Scrolltop-->
 
     <!--begin::Javascript-->
-    <script nonce="{{ csp_nonce() }}">
+    <script>
         var hostUrl = "";
     </script>
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-    <script nonce="{{ csp_nonce() }}" src="{{ asset('plugins/global/plugins.bundle.js') }}"></script>
-    <script nonce="{{ csp_nonce() }}" src="{{ asset('js/scripts.bundle.js') }}"></script>
+    <script src="{{ asset('plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ asset('js/scripts.bundle.js') }}"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Vendors Javascript(used for this page only)-->
-    <script nonce="{{ csp_nonce() }}" src="{{ asset('plugins/custom/fslightbox/fslightbox.bundle.js') }}"></script>
-    <script nonce="{{ csp_nonce() }}" src="{{ asset('plugins/custom/typedjs/typedjs.bundle.js') }}"></script>
+    <script src="{{ asset('plugins/custom/fslightbox/fslightbox.bundle.js') }}"></script>
+    <script src="{{ asset('plugins/custom/typedjs/typedjs.bundle.js') }}"></script>
     <!--end::Vendors Javascript-->
     <!--begin::Custom Javascript(used for this page only)-->
-    <script nonce="{{ csp_nonce() }}" src="{{ asset('js/custom/landing.js') }}"></script>
-    <script nonce="{{ csp_nonce() }}" src="{{ asset('js/custom/pages/pricing/general.js') }}"></script>
+    <script src="{{ asset('js/custom/landing.js') }}"></script>
+    <script src="{{ asset('js/custom/pages/pricing/general.js') }}"></script>
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
 

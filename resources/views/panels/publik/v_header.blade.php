@@ -1,7 +1,7 @@
 <div class="mb-0" id="home">
     <!--begin::Wrapper-->
     <div class="bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom landing-dark-bg"
-        style="background-image: url(images/landing_page8.svg)">
+        style="background-image: url({{ asset('images/landing_page8.svg') }})">
         <!--begin::Header-->
         <div class="landing-header" data-kt-sticky="true" data-kt-sticky-name="landing-header"
             data-kt-sticky-offset="{default: '200px', lg: '300px'}">
@@ -30,9 +30,9 @@
                         </button>
                         <!--end::Mobile menu toggle-->
                         <!--begin::Logo image-->
-                        <a href="../../demo8/dist/landing.html">
-                            <img alt="Logo" src="images/logo-apps.png" class="logo-default h-50px h-lg-65px" />
-                            <img alt="Logo" src="images/logo-apps2.png" class="logo-sticky h-50px h-lg-65px" />
+                        <a href="{{url('')}}">
+                            <img alt="Logo" src="{{ asset('images/logo-apps.png') }}" class="logo-default h-50px h-lg-65px" />
+                            <img alt="Logo" src="{{ asset('images/logo-apps2.png') }}" class="logo-sticky h-50px h-lg-65px" />
                         </a>
                         <!--end::Logo image-->
                     </div>
@@ -84,7 +84,7 @@
                     <!--end::Menu wrapper-->
                     <!--begin::Toolbar-->
                     <div class="flex-equal text-end ms-1">
-                        <a href="../../demo8/dist/authentication/layouts/basic/sign-in.html"
+                        <a href="{{url('/auth/login')}}"
                             class="btn btn-success">Sign In Aplikasi</a>
                     </div>
                     <!--end::Toolbar-->

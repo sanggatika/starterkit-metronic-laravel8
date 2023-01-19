@@ -1,6 +1,6 @@
 @extends('layouts/authLayoutMaster')
 
-@section('title', 'Beranda')
+@section('title', 'Forgot Password')
 
 @section('page-style')
     <!-- Current Page CSS Costum -->
@@ -16,7 +16,7 @@
             <!--begin::Heading-->
             <div class="text-center mb-5">
                 <!--begin::Title-->
-                <h1 class="text-dark fw-bolder mb-3">Login Ke Sistem</h1>
+                <h1 class="text-dark fw-bolder mb-3">Lupa Password</h1>
                 <!--end::Title-->
 
                 <!--begin::Subtitle-->
@@ -25,6 +25,29 @@
             </div>
             <!--begin::Heading-->
             
+            <div class="alert alert-info d-flex align-items-center p-2">
+                <!--begin::Icon-->
+                <span class="svg-icon svg-icon-2hx svg-icon-info me-3">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor"/>
+                        <rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)" fill="currentColor"/>
+                        <rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)" fill="currentColor"/>
+                    </svg>
+                </span>
+                <!--end::Icon-->
+
+                <!--begin::Wrapper-->
+                <div class="d-flex flex-column">
+                    <!--begin::Title-->
+                    <h4 class="mb-1 text-dark">Informasi</h4>
+                    <!--end::Title-->
+                    <!--begin::Content-->
+                    <span>Silahkan isi formulir berikut untuk melakukan reset password akun anda.</span>
+                    <!--end::Content-->
+                </div>
+                <!--end::Wrapper-->
+            </div>
+
             <!--begin::Separator-->
             <div class="separator separator-dotted separator-content border-success my-10">
                 <i class="bi bi-check-square text-success fs-2"></i>
@@ -66,23 +89,6 @@
                 <!--end::Email-->
             </div>
             <!--end::Input group=-->
-            <div class="fv-row mb-3">
-                <!--begin::Password-->
-                <input type="password" placeholder="Password" name="form_password" id="form_password" autocomplete="off"
-                    class="form-control bg-transparent" />
-                <!--end::Password-->
-            </div>
-            <!--end::Input group=-->
-
-            <!--begin::Wrapper-->
-            <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-5">
-                <div></div>
-                <!--begin::Link-->
-                <a href="{{ url('/auth/forgot') }}" class="link-primary">Lupa
-                    Password ?</a>
-                <!--end::Link-->
-            </div>
-            <!--end::Wrapper-->
 
             <!--end::Input group=-->
             <div class="fv-row mb-3">
@@ -96,13 +102,14 @@
             <div class="d-grid mb-10">
                 <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
                     <!--begin::Indicator label-->
-                    <span class="indicator-label">Sign In</span>
+                    <span class="indicator-label">Kirim Email</span>
                     <!--end::Indicator label-->
                     <!--begin::Indicator progress-->
                     <span class="indicator-progress">Please wait...
                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     <!--end::Indicator progress-->
                 </button>
+                <a href="{{url('/auth/login')}}" class="btn btn-secondary mt-5"><i class="bi bi-back fs-4 me-2"></i> Kembali Halaman Login</a>
             </div>
             <!--end::Submit button-->
             <!--begin::Sign up-->
@@ -118,5 +125,5 @@
 
 @section('page-script')
     <!-- Current Page JS Costum -->
-    <script src="{{ URL::asset('js/pages/auth/signin.js?version=') }}{{uniqid()}}"></script>
+    <script src="{{ URL::asset('js/pages/auth/forgot.js?version=') }}{{uniqid()}}"></script>
 @endsection

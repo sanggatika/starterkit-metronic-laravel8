@@ -79,11 +79,11 @@
         <!--begin::Page bg image-->
         <style>
             body {
-                background-image: url('media/auth/bg10.jpeg');
+                background-image: url('{{ URL::asset('media/auth/bg10.jpeg') }}');
             }
 
             [data-theme="dark"] body {
-                background-image: url('media/auth/bg10-dark.jpeg');
+                background-image: url('{{ URL::asset('media/auth/bg10-dark.jpeg') }}');
             }
         </style>
         <!--end::Page bg image-->
@@ -103,9 +103,9 @@
                     
                     <!--begin::Image-->
                     <img class="theme-light-show mx-auto mw-200 w-250px w-lg-600px mb-5 mb-lg-5"
-                        src="images/A03.png" alt="" />
+                        src="{{ URL::asset('images/A03.png') }}" alt="" />
                     <img class="theme-dark-show mx-auto mw-200 w-250px w-lg-600px mb-5 mb-lg-5"
-                        src="images/A03.png" alt="" />
+                        src="{{ URL::asset('images/A03.png') }}" alt="" />
                     <!--end::Image-->
 
                     <!--begin::Title-->
@@ -150,6 +150,8 @@
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
     <script src="{{ asset('plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('js/scripts.bundle.js') }}"></script>
+
+    <script src="{{ asset('js/pages/main_page.js') }}"></script>
     <!--end::Global Javascript Bundle-->
     
     <!--begin::Custom Javascript(used for this page only)-->
