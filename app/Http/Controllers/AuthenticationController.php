@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use App\Exceptions\Handler;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
@@ -19,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\LogLogin;
 use App\Models\User;
 use App\Models\PasswordReset;
+use App\Models\UserVerifies;
 
 class AuthenticationController extends Controller
 {
@@ -500,6 +500,210 @@ class AuthenticationController extends Controller
             $message = "Apakah Anda Robot Ingin Masuk Kedalam Sistem..!!";
             return $this->onResult($status, $response_code, $message, $dataAPI);
         }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function page_verifyAuthentication()
+    {        
+        if(!Auth::check())
+        {
+            return redirect('/');
+        }else {
+            if(Auth::user()->is_email_verified == 1)
+            {
+                return redirect('/dash');
+            }
+
+            $model['route'] = 'Forgot';
+            return view('pages.auth.verify', ['model' => $model]);
+        }
+    }
+
+    public function act_verifyresendAuthentication(Request $request)
+    {
+        $status = false;
+        $response_code = 'RC400';
+        $message = 'Data Gagal Terjadi Gangguan..';
+        $dataAPI = null;
+
+        $userAgent = mainHelpers::getUserAgent();
+        // wajib menggunakan request ajax
+        if ($request->ajax()) {
+            sleep(2);
+            // dd($request->all());
+            $validator = Validator::make($request->all(), [
+                'data_token' => 'required'
+            ]);
+
+            // Ketika data kiriman tidak sesuai
+            if ($validator->fails())
+            {
+                $response_code = "RC400";
+                $message = "Form Tidak Tervalidasi Dengan Sistem..!!";
+                return $this->onResult($status, $response_code, $message, $dataAPI);
+            }           
+
+            // Cek User Verify
+            $userID = Auth::user()->id;
+            $checkUserVerifies =  UserVerifies::where('user_id', $userID)->where('status', 0)->orderBy('created_at', 'desc')->first();
+
+            if ($checkUserVerifies) {
+                $start = Carbon::parse($checkUserVerifies->created_at);
+                $end = Carbon::now('Asia/Jakarta');
+                $selisih = $start->diffInMinutes($end);
+
+                $limit = (int) env("MAX_TOKEN_EMAIL_RESEND", 5);
+    
+                if ($limit > $selisih) {
+                    $message = "Tidak dapat mengirim email, silahkan tunggu " . ($limit - $selisih) . " menit untuk meminta email baru. Atau cek email anda pada kotak masuk dan spam untuk melanjutkan proses verifikasi akun.";
+                    return $this->onResult($status, $response_code, $message, $dataAPI);
+                }
+            }
+
+            $token = Str::random(64);
+
+            DB::beginTransaction();
+            try {
+                // menyimpan data transaksi kedalam database
+                $AddDBTransaksi = new UserVerifies();
+
+                $AddDBTransaksi->uuid = (string) Str::uuid();
+                $AddDBTransaksi->user_id = Auth::user()->id;
+                $AddDBTransaksi->email = Auth::user()->email;
+                $AddDBTransaksi->token = $token;
+                $AddDBTransaksi->status = 0;
+                $AddDBTransaksi->created_at = Carbon::now('Asia/Jakarta');
+
+                $AddDBTransaksi->save();
+
+                // proses kirim email
+                $sendEmailData = [
+                    // 'to' => $antrian[$i]->antrian_email,
+                    'to' => 'sanggatika@gmail.com',
+                    'subject' => "Verifikasi Akun Sistem",
+                    'html' => view('pages.email.auth_verifyakun', [
+                        'link' => url('auth/verify') . "/" . $token
+                    ])->render(),
+                ];
+                
+                $process_email  = mainHelpers::sendEmail($sendEmailData);
+
+                if ($process_email['state'] == true) 
+                {
+                    DB::commit();
+
+                    $status = true;
+                    $response_code = 'RC200';
+                    $message = 'Konfirmasi verifikasi akun anda berhasil dikirim ke email. Silahkan cek email anda !';
+                    $dataAPI = null;
+
+                    return $this->onResult($status, $response_code, $message, $dataAPI);
+                } else {
+                    DB::rollback();                    
+
+                    if(isset($process_email['message']))
+                    {
+                        Log::critical($process_email['message']);
+                    }
+
+                    if(isset($process_email['error']))
+                    {
+                        Log::critical($process_email['error']);
+                    }
+
+                    $response_code = "RC400";
+                    $message = "Sistem gagal Kesalahan saat kirim email konfirmasi !!";
+                    return $this->onResult($status, $response_code, $message, $dataAPI);
+                }                               
+            } catch (\Throwable $error) {
+                DB::rollback();
+                Log::critical($error);
+                
+                $response_code = "RC400";
+                $message = "Sistem gagal proses data, Kesalahan saat kirim data !!";
+                return $this->onResult($status, $response_code, $message, $dataAPI);
+            }
+
+        }else {
+            $response_code = "RC400";
+            $message = "Apakah Anda Robot Ingin Masuk Kedalam Sistem..!!";
+            return $this->onResult($status, $response_code, $message, $dataAPI);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function act_verifyAuthentication($token)
+    {       
+        if(!$token)
+        {
+            return redirect('/auth/login');
+        }
+
+        $is_valid = [
+            'status' => true,
+            'reason' => 'token_valid'
+        ];
+
+        // Cek Token
+        $checkToken =  UserVerifies::where('token', $token)->first();
+
+        $model['token'] = null;
+        
+        // validasi token
+        if(!$checkToken)
+        {
+            $is_valid['status'] = false;
+            $is_valid['reason'] = 'token_invalid';
+        }else{
+            if($checkToken->status == 1)
+            {
+                $is_valid['status'] = false;
+                $is_valid['reason'] = 'token_sudah_digunakan';
+            }
+
+            if($checkToken->status == -1)
+            {
+                $is_valid['status'] = false;
+                $is_valid['reason'] = 'token_expired';
+            }else{
+                if ((Carbon::parse($checkToken->created_at)->addMinutes(env("MAX_TOKEN_EMAIL_EXPIRED", 15)) >= Carbon::now('Asia/Jakarta')) == false) {
+                    $is_valid['status'] = false;
+                    $is_valid['reason'] = 'token_expired';
+
+                    $checkToken->status = '-1';
+                    $checkToken->save();
+                } 
+            }
+
+            $model['token'] = $checkToken->token;
+        };
+
+        if($is_valid['status'] == true)
+        {
+            // update
+            $checkExistingDataUser =  User::where('id', $checkToken->user_id)->first();
+
+            $checkExistingDataUser->email_verified_at = Carbon::now('Asia/Jakarta');
+            $checkExistingDataUser->is_email_verified = 1;
+            
+            $checkExistingDataUser->save();
+
+            // update
+            $checkToken->status = 1;
+            $checkToken->save();
+        }
+
+        $model['route'] = 'verified';
+        $model['vilid_token'] = $is_valid;
+        return view('pages.auth.verified', ['model' => $model]);
     }
 
     /**

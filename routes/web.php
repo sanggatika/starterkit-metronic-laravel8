@@ -7,8 +7,6 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\DashboardController;
 
-// Middleware 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,15 +35,22 @@ Route::group(['middleware' => ['guest']], function () {
     Route::post('/auth/forgot/send_verif', [AuthenticationController::class, 'act_forgotAuthentication'])->name('auth.forgot.send_verif');
 
     Route::get('/auth/reset/{token}', [AuthenticationController::class, 'page_resetAuthentication'])->name('auth.reset');
-    Route::post('/auth/reset/act', [AuthenticationController::class, 'act_resetAuthentication'])->name('auth.reset.act');
+    Route::post('/auth/reset/act', [AuthenticationController::class, 'act_resetAuthentication'])->name('auth.reset.act');    
 });
+
+Route::get('/auth/verify/{token}', [AuthenticationController::class, 'act_verifyAuthentication'])->name('auth.verify.act');
 
 // auth
 Route::group(['middleware' => ['auth','prevent-back-history']], function () {
     Route::get('/auth/logout', [AuthenticationController::class, 'logoutAuthentication'])->name('auth.logout');
+
+    Route::get('/auth/verify', [AuthenticationController::class, 'page_verifyAuthentication'])->name('auth.verify');
+    Route::get('/auth/verify/resend', [AuthenticationController::class, 'act_verifyresendAuthentication'])->name('auth.verify.resend');
+
+    // dashboard
+    Route::group(['middleware' => ['user_verified']], function () {
+        Route::get('/dash', [DashboardController::class, 'page_admDashboard'])->name('home');
+    });
 });
 
-// dashboard
-Route::group(['middleware' => ['verified']], function () {
-    Route::get('/dash', [DashboardController::class, 'page_admDashboard'])->name('dash');
-});
+
