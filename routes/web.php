@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ManagementMenuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,16 @@ Route::group(['middleware' => ['auth','prevent-back-history']], function () {
     // dashboard
     Route::group(['middleware' => ['user_verified']], function () {
         Route::get('/dash', [DashboardController::class, 'page_admDashboard'])->name('home');
+    });
+
+    // Management Menu
+    Route::group(['middleware' => ['user_verified']], function () {
+        Route::get('/management/menu', [ManagementMenuController::class, 'page_indexManagementMenu'])->name('management.menu');
+        Route::post('/management/menu/act_tambah', [ManagementMenuController::class, 'act_tambahManagementMenu'])->name('management.menu.act_tambah');
+        Route::post('/management/menu/get_detail', [ManagementMenuController::class, 'get_detailManagementMenu'])->name('management.menu.get_detail');
+        Route::post('/management/menu/act_edit', [ManagementMenuController::class, 'act_editManagementMenu'])->name('management.menu.act_edit');
+        Route::post('/management/menu/act_edit_status', [ManagementMenuController::class, 'act_editstatusManagementMenu'])->name('management.menu.act_edit_status');
+        Route::post('/management/menu/act_sort', [ManagementMenuController::class, 'act_sortManagementMenu'])->name('management.menu.act_sort');
     });
 });
 

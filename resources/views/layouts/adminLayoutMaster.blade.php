@@ -146,11 +146,11 @@
     <!--end::Main-->
     <!--begin::Engage drawers-->
     <!--begin::Demos drawer-->
-    @include('panels/admin/v_drawers_demos')
+    {{-- @include('panels/admin/v_drawers_demos') --}}
     <!--end::Demos drawer-->
 
     <!--begin::Help drawer-->
-    @include('panels/admin/v_drawers_help')
+    {{-- @include('panels/admin/v_drawers_help') --}}
     <!--end::Help drawer-->
     <!--end::Engage drawers-->
 

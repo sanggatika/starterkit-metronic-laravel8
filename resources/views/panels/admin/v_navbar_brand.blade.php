@@ -1,7 +1,7 @@
 <div class="header-brand">
     <!--begin::Logo-->
     <a href="../../demo8/dist/index.html">
-        <img alt="Logo" src="images/logo-apps.png" class="h-50px h-lg-50px" />
+        <img alt="Logo" src="{{ asset('images/logo-apps.png') }}" class="h-50px h-lg-50px" />
     </a>
     <!--end::Logo-->
     <!--begin::Aside minimize-->

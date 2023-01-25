@@ -5,13 +5,13 @@
         <!--begin::Page title-->
         <div class="page-title d-flex justify-content-center flex-column me-5">
             <!--begin::Title-->
-            <h1 class="d-flex flex-column text-dark fw-bold fs-3 mb-0">Blog Home</h1>
+            <h1 class="d-flex flex-column text-dark fw-bold fs-3 mb-0">@yield('title')</h1>
             <!--end::Title-->
             <!--begin::Breadcrumb-->
             <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 pt-1">
                 <!--begin::Item-->
                 <li class="breadcrumb-item text-muted">
-                    <a href="../../demo8/dist/index.html" class="text-muted text-hover-primary">Home</a>
+                    <a href="{{url('/dash')}}" class="text-muted text-hover-primary">Home</a>
                 </li>
                 <!--end::Item-->
                 <!--begin::Item-->
@@ -20,7 +20,7 @@
                 </li>
                 <!--end::Item-->
                 <!--begin::Item-->
-                <li class="breadcrumb-item text-dark">Blog Home</li>
+                <li class="breadcrumb-item text-dark">@yield('title')</li>
                 <!--end::Item-->
             </ul>
             <!--end::Breadcrumb-->
@@ -105,7 +105,7 @@
                         <div class="menu-content d-flex align-items-center px-3">
                             <!--begin::Avatar-->
                             <div class="symbol symbol-50px me-5">
-                                <img alt="Logo" src="media/avatars/300-1.jpg" />
+                                <img alt="Logo" src="{{ asset('media/avatars/300-1.jpg') }}" />
                             </div>
                             <!--end::Avatar-->
                             <!--begin::Username-->

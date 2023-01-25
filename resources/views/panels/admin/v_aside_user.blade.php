@@ -2,7 +2,7 @@
 <div class="aside-user d-flex align-items-sm-center justify-content-center py-5">
     <!--begin::Symbol-->
     <div class="symbol symbol-50px">
-        <img src="media/avatars/300-1.jpg" alt="" />
+        <img src="{{ asset('media/avatars/300-1.jpg') }}" alt="" />
     </div>
     <!--end::Symbol-->
     <!--begin::Wrapper-->
@@ -51,7 +51,7 @@
                         <div class="menu-content d-flex align-items-center px-3">
                             <!--begin::Avatar-->
                             <div class="symbol symbol-50px me-5">
-                                <img alt="Logo" src="media/avatars/300-1.jpg" />
+                                <img alt="Logo" src="{{ asset('media/avatars/300-1.jpg') }}" />
                             </div>
                             <!--end::Avatar-->
                             <!--begin::Username-->
