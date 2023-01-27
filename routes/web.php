@@ -71,6 +71,8 @@ Route::group(['middleware' => ['auth','prevent-back-history']], function () {
         Route::post('/management/role/get_detail', [ManagementRoleController::class, 'get_detailManagementRole'])->name('management.role.get_detail');
         Route::post('/management/role/act_edit', [ManagementRoleController::class, 'act_editManagementRole'])->name('management.role.act_edit');
         Route::post('/management/role/act_edit_status', [ManagementRoleController::class, 'act_editstatusManagementRole'])->name('management.role.act_edit_status');
+        Route::get('/management/role/hakakses/{data_role}', [ManagementRoleController::class, 'page_hakaksesManagementRole'])->name('management.role.hakakses');
+        Route::post('/management/role/act_hakakses', [ManagementRoleController::class, 'act_hakaksesManagementRole'])->name('management.role.act_hakakses');
     });
 });
 

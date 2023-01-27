@@ -1,6 +1,6 @@
 @extends('layouts/adminLayoutMaster')
 
-@section('title', 'Management Menu')
+@section('title', 'Management Role User')
 
 @section('page-style')
     <!-- Current Page CSS Costum -->
@@ -11,6 +11,7 @@
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <div class="container-fluid">
+            
             <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-5 p-6">
                 <!--begin::Icon-->
                 <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
@@ -171,6 +172,7 @@
                                         <th>No &nbsp; &nbsp;</th>
                                         <th>Role User</th>
                                         <th>Status</th>
+                                        <th>Konfigurasi</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -195,6 +197,11 @@
                                             @else
                                                 <button type="button" class="btn badge-light-info py-2">Role Aktif</button>
                                             @endif
+                                        </td>
+                                        <td> 
+                                            <a href="{{ route('management.role.hakakses', ['data_role' => $role->uuid])}}" class="btn btn-info py-2">
+                                                <span class="indicator-label"><i class="bi bi-diagram-3 fs-4 me-2"></i> Hak Akses</span>
+                                            </a>
                                         </td>
                                         <td>
                                             <a class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Aksi
@@ -334,5 +341,19 @@
 
 @section('page-script')
     <!-- Current Page JS Costum -->
+    @if (session()->has('errors'))
+    <script>
+        Swal.fire({
+            title: 'Error Data !',
+            text: '{{ $errors->first() }}',
+            icon: "warning",
+            buttonsStyling: false,
+            confirmButtonText: "Ok, got it!",
+            customClass: {
+                confirmButton: "btn btn-primary"
+            }
+        });
+    </script>
+    @endif
     <script src="{{ URL::asset('js/pages/management_role.js?version=') }}{{uniqid()}}"></script>
 @endsection
