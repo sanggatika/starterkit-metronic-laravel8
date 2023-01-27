@@ -7,6 +7,7 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ManagementMenuController;
+use App\Http\Controllers\ManagementRoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,15 @@ Route::group(['middleware' => ['auth','prevent-back-history']], function () {
         Route::post('/management/menu/act_edit', [ManagementMenuController::class, 'act_editManagementMenu'])->name('management.menu.act_edit');
         Route::post('/management/menu/act_edit_status', [ManagementMenuController::class, 'act_editstatusManagementMenu'])->name('management.menu.act_edit_status');
         Route::post('/management/menu/act_sort', [ManagementMenuController::class, 'act_sortManagementMenu'])->name('management.menu.act_sort');
+    });
+
+    // Management Role
+    Route::group(['middleware' => ['user_verified']], function () {
+        Route::get('/management/role', [ManagementRoleController::class, 'page_indexManagementRole'])->name('management.role');
+        Route::post('/management/role/act_tambah', [ManagementRoleController::class, 'act_tambahManagementRole'])->name('management.role.act_tambah');
+        Route::post('/management/role/get_detail', [ManagementRoleController::class, 'get_detailManagementRole'])->name('management.role.get_detail');
+        Route::post('/management/role/act_edit', [ManagementRoleController::class, 'act_editManagementRole'])->name('management.role.act_edit');
+        Route::post('/management/role/act_edit_status', [ManagementRoleController::class, 'act_editstatusManagementRole'])->name('management.role.act_edit_status');
     });
 });
 

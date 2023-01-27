@@ -11,7 +11,7 @@
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <div class="container-fluid">
-            <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
+            <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-5 p-6">
                 <!--begin::Icon-->
                 <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
                 <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
