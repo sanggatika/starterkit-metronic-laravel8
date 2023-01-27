@@ -35,7 +35,7 @@ class MenuServiceProvider extends ServiceProvider
             {
                 // dd(Auth::user()->role_id);
                 // Get Data Menu Sesuai Dengan Role Session
-                $ms_menu = V_menuauthorization::where('id_role', Auth::user()->role_id)->where('menu_status', 1)->where('menu_visible', 1)->where('authorization_status', 1)->orderBy('menu_sort', 'asc')->get();
+                $ms_menu = V_menuauthorization::where('id_role', Auth::user()->role_id)->where('menu_status', 1)->where('authorization_view', 1)->orderBy('menu_grup_sort', 'asc')->get();
                 
                 // Active Menu Sesuai Dengan URL Route
                 $active_menu = $ms_menu->where('menu_routename', Route::currentRouteName())->first();
