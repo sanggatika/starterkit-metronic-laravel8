@@ -141,7 +141,7 @@
             <!--begin:Menu item-->
             <div class="menu-item">
                 <!--begin:Menu link-->
-                <a class="menu-link" href="https://preview.keenthemes.com/html/metronic/docs/base/utilities">
+                <a class="menu-link" href="{{route('management.account')}}">
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                         <span class="svg-icon svg-icon-2">

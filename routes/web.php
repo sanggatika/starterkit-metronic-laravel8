@@ -8,6 +8,8 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ManagementMenuController;
 use App\Http\Controllers\ManagementRoleController;
+use App\Http\Controllers\ManagementAccountController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +75,13 @@ Route::group(['middleware' => ['auth','prevent-back-history']], function () {
         Route::post('/management/role/act_edit_status', [ManagementRoleController::class, 'act_editstatusManagementRole'])->name('management.role.act_edit_status');
         Route::get('/management/role/hakakses/{data_role}', [ManagementRoleController::class, 'page_hakaksesManagementRole'])->name('management.role.hakakses');
         Route::post('/management/role/act_hakakses', [ManagementRoleController::class, 'act_hakaksesManagementRole'])->name('management.role.act_hakakses');
+    });
+
+    // Management Akun
+    Route::group(['middleware' => ['user_verified']], function () {
+        Route::get('/management/account', [ManagementAccountController::class, 'page_indexManagementAccount'])->name('management.account');
+        Route::post('/management/account/act_edit', [ManagementAccountController::class, 'act_editManagementAccount'])->name('management.account.act_edit');
+        Route::post('/management/account/act_edit_pass', [ManagementAccountController::class, 'act_editpassManagementAccount'])->name('management.account.act_edit_pass');
     });
 });
 

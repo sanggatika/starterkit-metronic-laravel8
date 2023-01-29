@@ -211,6 +211,7 @@
     <!--end::Javascript-->
 
     {{-- page script --}}
+    <script src="{{ URL::asset('js/pages/main_page.js?version=') }}{{uniqid()}}"></script>
     @yield('page-script')
     {{-- page script --}}
 </body>

@@ -110,10 +110,10 @@
                             <!--end::Avatar-->
                             <!--begin::Username-->
                             <div class="d-flex flex-column">
-                                <div class="fw-bold d-flex align-items-center fs-5">Max Smith
+                                <div class="fw-bold d-flex align-items-center fs-5">{{Auth::user()->nama}}
                                     <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span>
                                 </div>
-                                <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">max@kt.com</a>
+                                <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{{Auth::user()->email}}</a>
                             </div>
                             <!--end::Username-->
                         </div>
@@ -135,7 +135,7 @@
                     
                     <!--begin::Menu item-->
                     <div class="menu-item px-5 my-1">
-                        <a href="../../demo8/dist/account/settings.html" class="menu-link px-5">Account Settings</a>
+                        <a href="{{route('management.account')}}" class="menu-link px-5">Account Settings</a>
                     </div>
                     <!--end::Menu item-->
                     <!--begin::Menu item-->
