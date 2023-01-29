@@ -1,4 +1,7 @@
 "use strict";
+
+const { defaultsDeep } = require("lodash");
+
 // validator
 
 var tambahManagemntMenu = function() {
@@ -179,6 +182,7 @@ function editManagementMenu(data_uuid)
 {
     $("#formedit_menu_icon").prop("disabled",false);
     let data_id = data_uuid;
+    var data_decrpty = null;
 
     $.ajax({
         url: BaseURL + "/management/menu/get_detail",
@@ -193,20 +197,35 @@ function editManagementMenu(data_uuid)
         success: function (data) {
             // console.log(data);
             if(data.status == true)
-            {
-                $('#formedit_menu_uuid').val(data.data.menu_uuid).prop('readonly', true);
+            {                
+                data_decrpty = JSON.parse(decryptAES256CBC(data.data));
+                if(data_decrpty)
+                {   
+                    $('#formedit_menu_uuid').val(data_decrpty.menu_uuid).prop('readonly', true);
 
-                $('#formedit_menu_grup').val(data.data.menu_grup_sort).change().prop('readonly', false);                
-                if(data.data.menu_parent != 0)
-                {
-                    $('#formedit_menu_parent').val(data.data.parent_uuid).change().prop('readonly', false);
-                    $("#formedit_menu_icon").prop("disabled",true);
-                } 
-                $('#formedit_menu_nama').val(data.data.menu_title).prop('readonly', false);
-                $('#formedit_menu_uri').val(data.data.menu_url).prop('readonly', false); 
-                $('#formedit_menu_routename').val(data.data.menu_routename).prop('readonly', false);                
+                    $('#formedit_menu_grup').val(data_decrpty.menu_grup_sort).change().prop('readonly', false);                
+                    if(data_decrpty.menu_parent != 0)
+                    {
+                        $('#formedit_menu_parent').val(data_decrpty.parent_uuid).change().prop('readonly', false);
+                        $("#formedit_menu_icon").prop("disabled",true);
+                    } 
+                    $('#formedit_menu_nama').val(data_decrpty.menu_title).prop('readonly', false);
+                    $('#formedit_menu_uri').val(data_decrpty.menu_url).prop('readonly', false); 
+                    $('#formedit_menu_routename').val(data_decrpty.menu_routename).prop('readonly', false);                
 
-                $('#modal-data-menu').modal('show');
+                    $('#modal-data-menu').modal('show');
+                }else{
+                    Swal.fire({
+                        text: "Gagal Decrpty data, Hubungi Administrator !!",
+                        icon: "warning",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    });
+                    return false;
+                }                   
             }else{                
                 Swal.fire({
                     text: data.message,

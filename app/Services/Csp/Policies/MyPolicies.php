@@ -68,7 +68,8 @@ class MyPolicies extends Policy
                 'api.mapbox.com',
                 'cdn2.woxo.tech',
                 'widget.kominfo.go.id',
-                'maps.googleapis.com'
+                'maps.googleapis.com',
+                'https://cdnjs.cloudflare.com'
             ])
             ->addDirective(Directive::STYLE, [
                 Keyword::SELF,

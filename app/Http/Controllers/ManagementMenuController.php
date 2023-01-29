@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
 
 use mainHelpers;
 use Carbon\Carbon;
@@ -201,7 +200,7 @@ class ManagementMenuController extends Controller
             }
             $checkExistingDataMenu->parent_uuid = $parent_uuid;
 
-            $dataAPI = $checkExistingDataMenu;
+            $dataAPI = Str::random(3).Crypt::encryptString($checkExistingDataMenu).Str::random(6);
             $status = true;
             $response_code = "RC200";
             $message = "Anda Berhasil Load Data Detail Menu !!";

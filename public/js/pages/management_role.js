@@ -161,10 +161,25 @@ function actDetailManagementRole(data)
         success: function (data) {
             if(data.status == true)
             {
-                $('#formedit_role_uuid').val(data.data.uuid).prop('readonly', true);
-                $('#formedit_role_nama').val(data.data.name).prop('readonly', false);
-                $('#formedit_role_deskripsi').val(data.data.description).prop('readonly', false);
-                $('#modal-data-role').modal('show');
+                data_decrpty = JSON.parse(decryptAES256CBC(data.data));
+                if(data_decrpty)
+                {   
+                    $('#formedit_role_uuid').val(data_decrpty.uuid).prop('readonly', true);
+                    $('#formedit_role_nama').val(data_decrpty.name).prop('readonly', false);
+                    $('#formedit_role_deskripsi').val(data_decrpty.description).prop('readonly', false);
+                    $('#modal-data-role').modal('show');
+                }else{
+                    Swal.fire({
+                        text: "Gagal Decrpty data, Hubungi Administrator !!",
+                        icon: "warning",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    });
+                    return false;
+                } 
             }else{                
                 Swal.fire({
                     text: data.message,

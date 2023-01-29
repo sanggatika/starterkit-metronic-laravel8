@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-key" content="dt7/0mkDc+1rDeWRmSuox418jcLBDkK8qzPSHcx51gU=">
 
     <title>Auth Starterkit Metronic 8 @yield('title')</title>
 
@@ -211,6 +212,8 @@
     <!--end::Javascript-->
 
     {{-- page script --}}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script> --}}
+    <script src="{{ URL::asset('js/crypto-js.min.js?version=') }}{{uniqid()}}"></script>
     <script src="{{ URL::asset('js/pages/main_page.js?version=') }}{{uniqid()}}"></script>
     @yield('page-script')
     {{-- page script --}}

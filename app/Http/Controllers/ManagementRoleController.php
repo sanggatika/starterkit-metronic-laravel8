@@ -145,7 +145,7 @@ class ManagementRoleController extends Controller
                 return $this->onResult($status, $response_code, $message, $dataAPI);
             }
 
-            $dataAPI = $checkExistingDataRole;
+            $dataAPI = Str::random(3).Crypt::encryptString($checkExistingDataRole).Str::random(6);;
             $status = true;
             $response_code = "RC200";
             $message = "Anda Berhasil Load Data Detail Role User !!";
